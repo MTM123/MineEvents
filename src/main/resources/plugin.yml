@@ -1,0 +1,6 @@
+name: Mineevents
+version: ${project.version}
+main: lv.mtm123.mineevents.MineEvents
+authors: [MTM123]
+description: Adds events that can happen when player is mining
+website: https://mtm123.lv
