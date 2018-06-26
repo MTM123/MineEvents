@@ -2,10 +2,10 @@ package lv.mtm123.mineevents.events
 
 import org.bukkit.event.block.BlockBreakEvent
 
-class Explode(var power: Float, chance: Double) : MEvent(chance) {
+class Explode(chance: Double, private val power: Float) : MEvent(chance) {
 
-    override fun BlockBreakEvent.mine() {
-        block.world.createExplosion(block.location, power)
+    override fun mine(event: BlockBreakEvent) {
+        event.block.world.createExplosion(event.block.location, power)
     }
 
 }

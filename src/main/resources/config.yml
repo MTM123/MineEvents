@@ -3,11 +3,11 @@ blocks:
     chance: 0.01
     events:
     - "60 explode 4.0"
-    - "200 spawn CREEPER:50,IRON_GOLEM:10"
+    - "200 spawn 50:CREEPER,10:IRON_GOLEM"
     - "100 cmd say %player% mined diamond ore"
   REDSTONE_ORE:
     chance: 0.2
     events:
     - "30 explode 4.5"
     - "10 explode 5"
-    - "50 spawn ZOMBIE:30"
+    - "50 spawn 30:ZOMBIE"

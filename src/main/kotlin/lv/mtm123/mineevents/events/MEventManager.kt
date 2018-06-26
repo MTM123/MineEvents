@@ -10,7 +10,7 @@ class MEventManager(var chance : Double, private val events : Set<MEvent>){
 
         var cumulativeWeight = 0.0
         for(e in events){
-            cumulativeWeight += e.chance
+            cumulativeWeight += e.weight
             if(p <= cumulativeWeight){
                 return e
             }

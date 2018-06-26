@@ -2,16 +2,20 @@ package lv.mtm123.mineevents.events
 
 import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.entity.Creature
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.block.BlockBreakEvent
 import java.util.concurrent.ThreadLocalRandom
 
-class Spawn(private val mobs : Map<Double, EntityType>, chance : Double) : MEvent(chance){
+class Spawn(chance : Double, private val mobs : Map<Double, EntityType>) : MEvent(chance){
 
-    override fun BlockBreakEvent.mine() {
+    override fun mine(event: BlockBreakEvent) {
         val type = rollRandomMob()
-        block.world.spawn(getSpawnableLocation(player, block.location, type), type.entityClass)
+        val en = event.block.world.spawn(getSpawnableLocation(event.player, event.block.location, type), type.entityClass)
+        if(en is Creature){
+            en.target = event.player
+        }
     }
 
     private fun rollRandomMob() : EntityType{
@@ -42,7 +46,7 @@ class Spawn(private val mobs : Map<Double, EntityType>, chance : Double) : MEven
             else -> height = 2
         }
 
-        var cloc = loc;
+        var cloc = loc
 
         for(x in -5..5){
             for(y in -5..5){

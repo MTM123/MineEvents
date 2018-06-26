@@ -1,4 +1,4 @@
-name: Mineevents
+name: MineEvents
 version: ${project.version}
 main: lv.mtm123.mineevents.MineEvents
 authors: [MTM123]
