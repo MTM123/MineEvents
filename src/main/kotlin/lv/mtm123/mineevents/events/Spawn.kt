@@ -8,7 +8,9 @@ import org.bukkit.entity.Player
 import org.bukkit.event.block.BlockBreakEvent
 import java.util.concurrent.ThreadLocalRandom
 
-class Spawn(chance : Double, private val mobs : Map<Double, EntityType>) : MEvent(chance){
+class Spawn(chance : Double, private val mobs : Set<Mob>) : MEvent(chance){
+
+    class Mob(var weight : Double, val type: EntityType)
 
     override fun mine(event: BlockBreakEvent) {
         val type = rollRandomMob()
@@ -22,10 +24,10 @@ class Spawn(chance : Double, private val mobs : Map<Double, EntityType>) : MEven
 
         val p = ThreadLocalRandom.current().nextDouble()
         var cumulativeWeight = 0.0
-        for(e in mobs.entries){
-            cumulativeWeight += e.key
+        for(m in mobs){
+            cumulativeWeight += m.weight
             if(p <= cumulativeWeight){
-                return e.value
+                return m.type
             }
         }
 

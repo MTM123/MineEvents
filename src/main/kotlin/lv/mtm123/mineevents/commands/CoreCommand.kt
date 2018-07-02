@@ -6,7 +6,7 @@ import lv.mtm123.mineevents.MineEvents
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 
-@CommandAlias("mineevents|me|mevents")
+@CommandAlias("mineevents|mev|mevents")
 @CommandPermission("mineevents.admin")
 class CoreCommand : BaseCommand(){
 

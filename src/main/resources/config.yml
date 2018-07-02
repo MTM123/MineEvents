@@ -5,7 +5,7 @@ blocks:
     - "60 explode 4.0"
     - "200 spawn 50:CREEPER,10:IRON_GOLEM"
     - "100 cmd say %player% mined diamond ore"
-  REDSTONE_ORE:
+  GLOWING_REDSTONE_ORE:
     chance: 0.2
     events:
     - "30 explode 4.5"

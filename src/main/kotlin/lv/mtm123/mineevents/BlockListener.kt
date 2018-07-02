@@ -29,8 +29,9 @@ class BlockListener(cfg : FileConfiguration) : Listener{
         val mEventManager = mineEvents[block.type]
 
         val chance = mEventManager?.chance ?: 0.0
+        println(chance)
         if(ThreadLocalRandom.current().nextDouble() <= chance){
-            mEventManager?.rollRandomEvent()
+            mEventManager?.rollRandomEvent()?.mine(this)
         }
     }
 
@@ -59,7 +60,7 @@ class BlockListener(cfg : FileConfiguration) : Listener{
 
         for(li in list){
             val data = li.split(" ")
-            if(data.size > 2)
+            if(data.size <= 2)
                 continue
 
             var weight: Double
@@ -85,14 +86,19 @@ class BlockListener(cfg : FileConfiguration) : Listener{
 
                 }
                 "spawn" -> {
-                    val mobs = HashMap<Double, EntityType>()
+                    val mobs = HashSet<Spawn.Mob>()
+
+                    var sum = 0.0
+
                     data[2].split(",").forEach{
                         val md = it.split(":")
                         if(md.size == 2){
                             try {
                                 val w = md[0].toDouble()
+                                sum += w
+
                                 val type = EntityType.valueOf(md[1].toUpperCase().replace("-", "_"))
-                                mobs.put(w, type)
+                                mobs.add(Spawn.Mob(w, type))
                             }catch (e: NumberFormatException){
                                 Bukkit.getLogger().log(Level.WARNING, "'${md[0]}' is not a number! It must be a number!")
                             }
@@ -101,6 +107,8 @@ class BlockListener(cfg : FileConfiguration) : Listener{
                             Bukkit.getLogger().log(Level.WARNING, "'$it' is incorrectly formatted! Expected format: WEIGHT:ENTITY_TYPE")
                         }
                     }
+
+                    mobs.forEach { m -> m.weight /= sum }
 
                     events.add(Spawn(weight, mobs))
                 }

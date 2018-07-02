@@ -8,12 +8,14 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class MineEvents : JavaPlugin(){
 
-    private val commandManager = BukkitCommandManager(this)
+    private lateinit var commandManager : BukkitCommandManager
 
     override fun onEnable() {
+
         ConfigManager.initialize(this)
 
         loadPlugin()
+
     }
 
     fun loadPlugin(reload : Boolean = false){
@@ -22,6 +24,8 @@ class MineEvents : JavaPlugin(){
             HandlerList.unregisterAll(this)
             commandManager.unregisterCommands()
         }
+
+        commandManager = BukkitCommandManager(this)
 
         val cfg = ConfigManager.load("config.yml")
 
