@@ -1,9 +1,21 @@
+# List of events for specific blocks. Use https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+# for block names.
 blocks:
   DIAMOND_ORE:
+    # Chance that any event will happen
     chance: 0.01
     events:
+    # Explode event - creates an explosion.
+    # Format: <weight> explode <power>
+    # Event with higher weight have higher probablity of getting triggered
     - "60 explode 4.0"
+    # Spawn event - spawns a mob near player and attacks the player.
+    # Format: <weight> spawn [<weight>:<mobname,...]
+    # Use https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html for entity names
     - "200 spawn 50:CREEPER,10:IRON_GOLEM"
+    # Command event - executes a command
+    # Format: <weight> cmd <command>
+    # Available placeholders: %player% - replaced wih player's name
     - "100 cmd say %player% mined diamond ore"
   GLOWING_REDSTONE_ORE:
     chance: 0.2

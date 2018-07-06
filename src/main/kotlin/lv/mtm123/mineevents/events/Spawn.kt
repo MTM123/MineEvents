@@ -48,19 +48,24 @@ class Spawn(chance : Double, private val mobs : Set<Mob>) : MEvent(chance){
             else -> height = 2
         }
 
-        var cloc = loc
+        var cloc : Location = loc.block.getRelative(-5, -5, -5).location
 
         for(x in -5..5){
             for(y in -5..5){
                 for(z in -5..5){
 
-                    val rel = loc.block.getRelative(x, y - 1, z).location
+                    val rel = loc.block.getRelative(x, y, z).location
+
+                    player.sendBlockChange(rel, Material.STAINED_GLASS, 0)
 
                     if(cloc.distanceSquared(player.location) <= rel.distanceSquared(player.location))
                         continue
 
+                    if(!rel.block.type.isSolid)
+                        continue
+
                     if(isValidSpawnLoc(rel, width, height)){
-                        cloc = rel.add(0.0, 1.0, 0.0)
+                        cloc = rel
                     }
 
                 }
